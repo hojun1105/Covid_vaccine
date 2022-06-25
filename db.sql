@@ -1,62 +1,59 @@
 create database jdb;
+use jdb;
+drop database jdb;
+
 create table client(
 	num int primary key auto_increment,
 	id varchar(120) not null,
 	pw varchar(120) not null,
 	age int not null,
-	gender char not null,
+	gender varchar(120) not null,
 	phone varchar(120) not null
 );
 
 alter table client add unique(id);
-alter table client modify column gender varchar(120); 
 
 create table hospital(
-	num INT primary key auto_increment,
-    client_num varchar(120) not null,
-	vacType char not null,
+	hospitalId INT primary key auto_increment,
+	vacType varchar(120) not null,
 	amount int not null,
 	age_min int not null,
 	age_max int not null,
 	startDate DATE not null,
 	endDate DATE not null,
-	today varchar(80) not null,
-	
-    foreign key(client_num) references client(id)
+	today Date not null
+
 );
-ALTER TABLE hospital RENAME COLUMN num TO hospitalId;
-alter table hospital modify column vacType varchar(120); 
-alter table hospital modify column today date;
+
 
 
  
 
 create table injection(
-	num INT primary key auto_increment,
-	
-	client_num varchar(120) not null,
+	id INT primary key auto_increment,
+	client_id varchar(120) not null,
     reserve_num int not null,
-	vacType char not null,
+	vacType varchar(120) not null,
 	degree int not null,
-	part char not null,
-	updated date not null,
+	part varchar(120) not null,
+	injection_date date not null,
     
   foreign key(reserve_num) references reservation(reserveNum),
-  foreign key(client_num) references client(id)
-  
+  foreign key(client_id) references client(id)
 );
-ALTER TABLE injection RENAME COLUMN num TO id;
-ALTER TABLE injection RENAME COLUMN client_num TO client_id;
-ALTER TABLE injection RENAME COLUMN updated TO injection_date;
-alter table injection modify column vacType varchar(120); 
-alter table injection modify column part varchar(120);
+
+
 
 create table reservation(
 	reserveNum Int primary key auto_increment,
-	client_num varchar(120) not null,
+	clientId varchar(120) not null,
 	ReserveDay Date not null,
 	injected boolean default false,
 	
-  foreign key(client_num) references client(id)
+  foreign key(clientId) references client(id)
 );
-ALTER TABLE reservation RENAME COLUMN client_num TO clientId;
+
+select * from client;
+select * from reservation;
+select * from injection;
+select * from hospital;
